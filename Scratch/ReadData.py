@@ -14,3 +14,12 @@ def readMag(obs_fname, pred_fname=None):
         dat['pred'] = np.loadtxt(pred_fname, skiprows=3)[:, -1]
 
     return dat
+
+def readTopo(fname):
+
+    opts = {'skiprows':1,
+            'delim_whitespace':True,
+            'names':['x', 'y', 'z']}
+
+    topo = pd.read_csv(fname, **opts)
+    return topo
