@@ -1,24 +1,28 @@
 import numpy as np
 
-def appRes(ax, ay, bx, by, mx, my, nx, ny, V, I):
-    dx_am = ax-mx
-    dx_an = ax-nx
-    dx_bm = bx-mx
-    dx_bn = bx-nx
+def calcK(Ax, Ay, Bx, By, Mx, My, Nx, Ny):
+    dx_am = Ax-Mx
+    dx_an = Ax-Nx
+    dx_bm = Bx-Mx
+    dx_bn = Bx-Nx
 
-    dy_am = ay-my
-    dy_an = ay-ny
-    dy_bm = by-my
-    dy_bn = by-ny
+    dy_am = Ay-My
+    dy_an = Ay-Ny
+    dy_bm = By-My
+    dy_bn = By-Ny
 
     ram = np.sqrt(dx_am**2 + dy_am**2)
     ran = np.sqrt(dx_an**2 + dy_an**2)
     rbm = np.sqrt(dx_bm**2 + dy_bm**2)
     rbn = np.sqrt(dx_bn**2 + dy_bn**2)
 
-    k = 1/ram - 1/rbm - 1/ran + 1/rbn
+    K = 1/ram - 1/rbm - 1/ran + 1/rbn
+    return K
 
-    rho = (2*np.pi*V)/(k*I)
+def appRes(Ax, Ay, Bx, By, Mx, My, Nx, Ny, Vp, In=1.):
+    
+    K = calcK(Ax, Ay, Bx, By, Mx, My, Nx, Ny)
+    rho = (2*np.pi*Vp)/(K*In)
     return rho
 
 def writeDCIP(fname, data):
